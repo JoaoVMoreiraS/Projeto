@@ -1,3 +1,5 @@
+require ("dotenv").configure();
+
 const mysql = require ("mysql2/promise")
 
 const conexao = mysql.createPool({
@@ -8,3 +10,4 @@ const conexao = mysql.createPool({
 })
 
 module.exports = conexao
+
