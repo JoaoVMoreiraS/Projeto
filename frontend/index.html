@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,40 +7,52 @@
 </head>
 <body>
     <div>
-        <form id ="formProduto">
-            <input id = "nome" type="text" placeholder ="Digite o nomde do produto">
+        <form id="formProduto">
 
-            <input id = "preco" type="text" placerholder = "Digite o valo do produto">
+            <input id="nome" type="text" placeholder="Digite o nome do produto...">
 
-            <button type = "submit">Cadastrar</button>
+            <input id="preco" type="text" placeholder="Digite o preco do produto...">
+
+            <button type="submit">Cadastrar</button>
         </form>
     </div>
 
     <script>
+        
 
-        const form = document.getElementById("formProduto")
+        const form = document.getElementById("formProduto");
 
         form.addEventListener("submit", async(e)=>{
-            e.preventDefault
+            e.preventDefault()
 
-        const produto = {
+            const produto = {
+                nome: document.getElementById("nome").value,
+                preco: document.getElementById("preco").value
+            }
 
-        nome:  document.getElementById("nome").value
+            try {
+                const resposta = await fetch("http://localhost:3001/produtos",{
+                    method:"POST",
+                    headers: {
+                        "Content-type":"application/json"
+                    },
+                    body:JSON.stringify(produto)
+                })
 
-        preco: document.getElementById("preco").value
-        }
-        try{
-            const reposta = await fetch("http://localhost:3001/produtos",
-                method: "POST"
-                Headers: {
-                    "content-type": "application/json"
-                },
-                
-            )
-        } 
-            
+                const dados = await resposta.json()
+
+                alert("Produto cadastrado com sucesso")
+
+                form.reset()
+            } catch (error) {
+                alert("erro!")
+                console.log(error)
+            }
+
+
         })
 
+        
 
     </script>
 </body>
